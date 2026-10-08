@@ -20,14 +20,14 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
-    - name: Generate Gradle Wrapper 8.0
-      run: gradle wrapper --gradle-version 8.0
+    - name: Install Gradle 8.0 Manually
+      run: |
+        wget https://services.gradle.org/distributions/gradle-8.0-bin.zip
+        unzip -q gradle-8.0-bin.zip
+        echo "$PWD/gradle-8.0/bin" >> $GITHUB_PATH
 
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
-
-    - name: Build Debug APK with Gradle
-      run: ./gradlew assembleDebug
+    - name: Build Debug APK with Gradle 8.0
+      run: gradle assembleDebug
 
     - name: Upload APK Artifact
       uses: actions/upload-artifact@v4
